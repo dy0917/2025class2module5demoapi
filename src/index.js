@@ -1,4 +1,5 @@
 const express = require("express");
+const { add, minus } = require("./controller/calculator");
 const app = express();
 const port = 3000;
 
@@ -6,12 +7,18 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/myfristRoute", (req, res) => {
-  res.send("myfristRoute!!!");
+app.get("/add", (req, res) => {
+  const { num1, num2 } = req.query;
+  const result = add(Number.parseInt(num1), Number.parseInt(num2));
+  if (!result) {
+    res.send("please provide numbers");
+  }
+  res.json({ result });
 });
 
-app.get("/test", (req, res) => {
-  res.send("This is a test");
+app.get("/minus", (req, res) => {
+  const result = minus(6, 3);
+  res.send(result);
 });
 
 app.listen(port, () => {
